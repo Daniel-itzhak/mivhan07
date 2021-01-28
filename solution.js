@@ -13,8 +13,8 @@ class task {
     toHtml(){
         return `<span id='post-${count}'>${task.inner}
         </span>
-        <button class='finishBtn ${count}' onclick='finishT(${count})'>Finished</button>
-        <br class='brSpan ${count}'>`;
+        <button class='finishBtn num${count}' onclick='finishT(${count})'>Finished</button>
+        <br class='brSpan num${count}'>`;
     }
 }
 window.onload=()=>{
@@ -55,19 +55,23 @@ function finishT(c){
     arrF.push(c);
 }
 deleBtn.addEventListener('click',()=>{
-    let x=document.querySelectorAll(`span`);
-    let y=document.querySelectorAll(`.finishBtn`);
-    let z=document.querySelectorAll(`.brSpan`);
+    // let x=document.querySelectorAll(`span`);
+    // let y=document.querySelectorAll(`.finishBtn`);
+    // let z=document.querySelectorAll(`.brSpan`);
     let len= arrF.length;
+    console.log(arrF);
     for(let i=0; i<len ; i++){
-        document
-        x[arrF[i]].remove();
-        y[arrF[i]].remove();
-        z[arrF[i]].remove();
+        document.querySelector(`#post-${arrF[i]}`).remove();
+        document.querySelector(`.finishBtn.num${arrF[i]}`).remove();
+        document.querySelector(`.brSpan.num${arrF[i]}`).remove();
+        // x[arrF[i]].remove();
+        // y[arrF[i]].remove();
+        // z[arrF[i]].remove();
+        arr[arrF[i]]=null;
     }
     let tempArr=[];
     for(let k=0; k<arr.length; k++){
-        if(arrF.indexOf(k)==-1){
+        if(arr[k]!=null){
             tempArr.push(arr[k]);
         }
     }
