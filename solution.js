@@ -21,15 +21,17 @@ window.onload=()=>{
     let arrIn = JSON.parse(localStorage.getItem('list'));
     if(arrIn!=null){
        for(let i=0; i<arrIn.length; i++){
-           console.log(typeof arrIn[i]); 
-           todoList.innerHTML += arrIn[i];
-           arr.push(arrIn[i])
+           let inH=new task(arrIn[i].slice(18,18+arrIn[i].length-145))
+           todoList.innerHTML += inH.toHtml();
+           arr.push(inH.toHtml());
+           console.log(count);
+           count++;
         }
+        localStorage.setItem('list',JSON.stringify(arr));
     }
 }
 saveBtn.addEventListener('click',()=>{
     let a= new task(inputM.value);
-    console.log(count);
     todoList.innerHTML+=a.toHtml();
     arr.push(a.toHtml());
     localStorage.setItem('list',JSON.stringify(arr));
@@ -55,18 +57,12 @@ function finishT(c){
     arrF.push(c);
 }
 deleBtn.addEventListener('click',()=>{
-    // let x=document.querySelectorAll(`span`);
-    // let y=document.querySelectorAll(`.finishBtn`);
-    // let z=document.querySelectorAll(`.brSpan`);
     let len= arrF.length;
     console.log(arrF);
     for(let i=0; i<len ; i++){
         document.querySelector(`#post-${arrF[i]}`).remove();
         document.querySelector(`.finishBtn.num${arrF[i]}`).remove();
         document.querySelector(`.brSpan.num${arrF[i]}`).remove();
-        // x[arrF[i]].remove();
-        // y[arrF[i]].remove();
-        // z[arrF[i]].remove();
         arr[arrF[i]]=null;
     }
     let tempArr=[];
