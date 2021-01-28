@@ -12,8 +12,9 @@ class task {
     }
     toHtml(){
         return `<span id='post-${count}'>${task.inner}
-        <button onclick='finishT(${count})'>Finished</button>
-        </span><br>`;
+        </span>
+        <button class='finishBtn ${count}' onclick='finishT(${count})'>Finished</button>
+        <br class='brSpan ${count}'>`;
     }
 }
 window.onload=()=>{
@@ -38,10 +39,13 @@ saveBtn.addEventListener('click',()=>{
 deleAllBtn.addEventListener('click',()=>{
     localStorage.clear();
     let x=document.querySelectorAll(`span`);
+    let y=document.querySelectorAll(`.finishBtn`);
+    let z=document.querySelectorAll(`.brSpan`);
     let len= x.length;
     for(let i=len-1; i>=0 ; i--){
         x[i].remove();
-        console.log(i,len);
+        y[i].remove();
+        z[i].remove();
     }
     arr.splice(0,arr.length);
 })
@@ -52,8 +56,21 @@ function finishT(c){
 }
 deleBtn.addEventListener('click',()=>{
     let x=document.querySelectorAll(`span`);
+    let y=document.querySelectorAll(`.finishBtn`);
+    let z=document.querySelectorAll(`.brSpan`);
     let len= arrF.length;
     for(let i=0; i<len ; i++){
+        document
         x[arrF[i]].remove();
+        y[arrF[i]].remove();
+        z[arrF[i]].remove();
     }
+    let tempArr=[];
+    for(let k=0; k<arr.length; k++){
+        if(arrF.indexOf(k)==-1){
+            tempArr.push(arr[k]);
+        }
+    }
+    localStorage.setItem('list',JSON.stringify(tempArr));
+    arrF.splice(0,arrF.length);
 });
