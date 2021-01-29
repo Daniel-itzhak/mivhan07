@@ -13,7 +13,7 @@ class task {
     toHtml(){
         return `<div class='todo-row num${count}'>
         <span id='post-${count}' class='todo-item'>${task.inner}</span>
-        <button class='todo-ok' onclick='finishT(${count})'></button>
+        <button class='todo-ok num${count}' onclick='finishT(${count})'></button>
         <br></div>`;
     }
 }
@@ -55,6 +55,7 @@ function finishT(c){
     let span = document.querySelector(`#post-${c}`);
     span.classList.add('done');
     arrF.push(c);
+    document.querySelector(`.todo-ok.num${c}`).disabled = true;
     let div = document.querySelector(`.todo-row.num${c}`);
     div.innerHTML += `<button class='todo-cx num${c}' onclick='cencelFin(${c})'></button>`;
 }
@@ -81,4 +82,5 @@ function cencelFin(c){
     span.classList.remove('done');
     document.querySelector(`.todo-cx.num${c}`).remove();
     arrF.splice(arrF.indexOf(c),1);
+    document.querySelector(`.todo-ok.num${c}`).disabled = false;
 }
