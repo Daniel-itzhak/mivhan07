@@ -94,7 +94,11 @@ TYPESCRIPT + ES6 + GIT מבחן מעשי בנושאים
     background: #4AA53D;
     border: 2px solid #4AA53D;
 }
-
+.todo-ok:after{
+    font-size: larger;
+    color: white;
+    content: '\2714';
+}
 /* (G) DOES NOT MATTER */
 html,
 body,

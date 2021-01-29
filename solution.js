@@ -13,7 +13,7 @@ class task {
     toHtml(){
         return `<div class='todo-row num${count}'><span id='post-${count}' class='todo-item'>${task.inner}
         </span>
-        <button class='todo-ok' onclick='finishT(${count})'>&#x2705</button>
+        <button class='todo-ok' onclick='finishT(${count})'></button>
         <br></div>`;
     }
 }
