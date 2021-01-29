@@ -89,6 +89,11 @@ TYPESCRIPT + ES6 + GIT מבחן מעשי בנושאים
     background: #CF585C;
     border: 2px solid #CF585C;
 }
+.todo-cx:after{
+    font-size: larger;
+    color: black;
+    content: '\2718';
+}
 
 .todo-ok {
     background: #4AA53D;

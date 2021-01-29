@@ -11,8 +11,8 @@ class task {
         task.inner=inner;
     }
     toHtml(){
-        return `<div class='todo-row num${count}'><span id='post-${count}' class='todo-item'>${task.inner}
-        </span>
+        return `<div class='todo-row num${count}'>
+        <span id='post-${count}' class='todo-item'>${task.inner}</span>
         <button class='todo-ok' onclick='finishT(${count})'></button>
         <br></div>`;
     }
@@ -36,6 +36,7 @@ saveBtn.addEventListener('click',()=>{
     todoList.innerHTML+=a.toHtml();
     arr.push(a.toHtml());
     localStorage.setItem('list',JSON.stringify(arr));
+    inputM.value = "";
     count++;
 });
 
@@ -52,8 +53,10 @@ deleAllBtn.addEventListener('click',()=>{
 })
 function finishT(c){
     let span = document.querySelector(`#post-${c}`);
-    span.classList.add('done');;
+    span.classList.add('done');
     arrF.push(c);
+    let div = document.querySelector(`.todo-row.num${c}`);
+    div.innerHTML += `<button class='todo-cx num${c}' onclick='cencelFin(${c})'></button>`;
 }
 deleBtn.addEventListener('click',()=>{
     if(window.confirm('Delete completed tasks?')){
@@ -73,3 +76,9 @@ deleBtn.addEventListener('click',()=>{
         arrF.splice(0,arrF.length);
     }
 });
+function cencelFin(c){
+    let span = document.querySelector(`#post-${c}`);
+    span.classList.remove('done');
+    document.querySelector(`.todo-cx.num${c}`).remove();
+    arrF.splice(arrF.indexOf(c),1);
+}
