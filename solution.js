@@ -11,17 +11,18 @@ class task {
         task.inner=inner;
     }
     toHtml(){
-        return `<span id='post-${count}'>${task.inner}
+        return `<div class='todo-row num${count}'><span id='post-${count}' class='todo-item'>${task.inner}
         </span>
-        <button class='finishBtn num${count}' onclick='finishT(${count})'>Finished</button>
-        <br class='brSpan num${count}'>`;
+        <button class='todo-ok' onclick='finishT(${count})'>&#x2705</button>
+        <br></div>`;
     }
 }
 window.onload=()=>{
     let arrIn = JSON.parse(localStorage.getItem('list'));
     if(arrIn!=null){
        for(let i=0; i<arrIn.length; i++){
-           let inH=new task(arrIn[i].slice(18,18+arrIn[i].length-145))
+           let a= ((arrIn[i].split('>')[2]).split('<'))[0];
+           let inH=new task(a);
            todoList.innerHTML += inH.toHtml();
            arr.push(inH.toHtml());
            console.log(count);
@@ -39,38 +40,36 @@ saveBtn.addEventListener('click',()=>{
 });
 
 deleAllBtn.addEventListener('click',()=>{
-    localStorage.clear();
-    let x=document.querySelectorAll(`span`);
-    let y=document.querySelectorAll(`.finishBtn`);
-    let z=document.querySelectorAll(`.brSpan`);
-    let len= x.length;
-    for(let i=len-1; i>=0 ; i--){
-        x[i].remove();
-        y[i].remove();
-        z[i].remove();
+    if(window.confirm('Delete All tasks?')){
+        let x=document.querySelectorAll('.todo-row')
+        localStorage.clear();
+        let len= x.length;
+        for(let i=len-1; i>=0 ; i--){
+            x[i].remove();
+        }
+        arr.splice(0,arr.length);
     }
-    arr.splice(0,arr.length);
 })
 function finishT(c){
-    let grT= document.querySelector(`#post-${c}`);
-    grT.style.backgroundColor = 'green'
+    let span = document.querySelector(`#post-${c}`);
+    span.classList.add('done');;
     arrF.push(c);
 }
 deleBtn.addEventListener('click',()=>{
-    let len= arrF.length;
-    console.log(arrF);
-    for(let i=0; i<len ; i++){
-        document.querySelector(`#post-${arrF[i]}`).remove();
-        document.querySelector(`.finishBtn.num${arrF[i]}`).remove();
-        document.querySelector(`.brSpan.num${arrF[i]}`).remove();
-        arr[arrF[i]]=null;
-    }
-    let tempArr=[];
-    for(let k=0; k<arr.length; k++){
-        if(arr[k]!=null){
-            tempArr.push(arr[k]);
+    if(window.confirm('Delete completed tasks?')){
+        let len= arrF.length;
+        console.log(arrF);
+        for(let i=0; i<len ; i++){
+            document.querySelector(`.todo-row.num${arrF[i]}`).remove();
+            arr[arrF[i]]=null;
         }
+        let tempArr=[];
+        for(let k=0; k<arr.length; k++){
+            if(arr[k]!=null){
+                tempArr.push(arr[k]);
+            }
+        }
+        localStorage.setItem('list',JSON.stringify(tempArr));
+        arrF.splice(0,arrF.length);
     }
-    localStorage.setItem('list',JSON.stringify(tempArr));
-    arrF.splice(0,arrF.length);
 });
